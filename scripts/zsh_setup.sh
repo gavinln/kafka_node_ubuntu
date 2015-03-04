@@ -20,5 +20,5 @@ if ! grep -qe "$ZSH_SETUP" $ZSHRC; then
 fi
 
 # setup ohmyzsh plugins
-sed -i "s/plugins=(git)/plugins=(git fabric)/" $ZSHRC
+sed -i "s/plugins=(git)/plugins=(git fabric docker)/" $ZSHRC
 
