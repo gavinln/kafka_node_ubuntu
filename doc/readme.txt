@@ -1,36 +1,43 @@
-This VM demonstrates using docker with a ubuntu VM that supports docker and supports virtual box shared folders (vboxsf)
+To setup the zsh
+1. Start zsh
+zsh
+cd /vagrant/scripts
+./zsh_setup.sh
 
-sudo docker run \
-  --volume=/:/rootfs:ro \
-  --volume=/var/run:/var/run:rw \
-  --volume=/sys:/sys:ro \
-  --volume=/var/lib/docker/:/var/lib/docker:ro \
-  --publish=8080:8080 \
-  --detach=true \
-  --name=cadvisor \
-  google/cadvisor:latest
+Setup environment for docker to run
+source /vagrant/scripts/kafka_docker_setup.sh
 
-docker run -t -i phusion/baseimage:latest /sbin/my_init -- bash -l
+Start Zookeeper & Kafa
+fig up -d
 
-cd /vagrant/fig/odbc
-sudo docker build -t odbc_test .
+Start Kafka shell
 
-sudo docker save -o ubuntu_docker_python.tar odbc_test
+Start two Kafka shells
+./start-kafka-shell.sh $KAFKA_ADVERTISED_HOST_NAME $KAFKA_ADVERTISED_HOST_NAME:2181
+cd $KAFKA_HOME
 
-https://onedrive.live.com/download?cid=5184C6CE006B3E69&resid=5184C6CE006B3E69%21506&authkey=ANkLm7KmSwJruVA
+Start producer in one Kafka shell
+bin/kafka-topics.sh --create --topic topic --partitions 4 --zookeeper $ZK --replication-factor 1
+bin/kafka-topics.sh --describe --topic topic --zookeeper $ZK
+bin/kafka-console-producer.sh --topic=topic --broker-list=`broker-list.sh`
 
-sudo docker load -i ubuntu_docker_python.tar
+Start consumer in another Kafka shell
+bin/kafka-console-consumer.sh --topic=topic --zookeeper=$ZK
 
-To setup an nginx reverse proxy
-See https://github.com/jwilder/nginx-proxy
-docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
+Type lines in producer shell to send to consumer
 
-To setup Miniconda use
-https://github.com/ContinuumIO/docker-images/blob/master/miniconda/Dockerfile
 
-To create a Samba share
-1. Create a directory in /srv
-sudo mkdir /srv/pictures
 
-2. Set the correct permissions
-sudo chmod 777 /srv/pictures
+Start tmux
+tmux
+
+Split window by typing: Ctrl+B "
+Switch panes by typing: Ctrl+B O
+Scroll by typing: Ctrl+B [
+
+Start Docker without sudo
+sudo groupadd docker
+sudo gpasswd -a ${USER} docker
+sudo service docker restart
+
+
