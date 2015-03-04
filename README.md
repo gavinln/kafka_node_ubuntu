@@ -1,10 +1,10 @@
-ubuntu_docker
-=============
+kafka_node_ubuntu
+=================
 
 * Source code - [Github][1]
 * Author - Gavin Noronha - <gavinln@hotmail.com>
 
-[1]: https://github.com/gavinln/ubuntu_docker.git
+[1]: https://github.com/gavinln/kafka_node_ubuntu.git
 
 About
 -----
