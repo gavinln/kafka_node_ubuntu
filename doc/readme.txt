@@ -40,4 +40,9 @@ sudo groupadd docker
 sudo gpasswd -a ${USER} docker
 sudo service docker restart
 
+Resources
+https://github.com/mumrah/kafka-python
+https://github.com/wurstmeister/kafka-docker
+https://github.com/docker/docker-py
 
+pip install kafka-python

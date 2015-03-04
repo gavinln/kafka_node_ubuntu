@@ -19,10 +19,9 @@ env.roledefs['workers'] = config['workers']
 env.use_ssh_config = True
 
 
-@task(name='host-type')
-@roles('master')
-def host_type():
+def display_info():
     ''' display os name for master hosts '''
+    print('User: {}, Password: {}'.format())
     run('uname -a')
 
 
