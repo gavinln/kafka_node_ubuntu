@@ -19,6 +19,9 @@ $script = <<SCRIPT
     (puppet module list | grep willdurand-nodejs) ||
         puppet module install -v 1.8.3 willdurand-nodejs
 
+    (puppet module list | grep saz-timezone) ||
+        puppet module install -v 3.1.1 saz-timezone
+
 SCRIPT
 
 
@@ -38,19 +41,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.box = "ubuntu/trusty64"
 
-    # Plugin required for proxy: vagrant plugin install vagrant-proxyconf
-    # To remove proxies: unset http_proxy; unset HTTPS_PROXY
-    #if Vagrant.has_plugin?("vagrant-proxyconf")
-    #    config.proxy.http     = "http://192.168.0.100:3128"
-    #    #config.proxy.https    = "http://gavinln.dyndns.org:3128"
-    #    config.proxy.no_proxy = "localhost,127.0.0.1,/var/run/docker.sock"
-    #end
+    # Set up SSH agent forwarding
+    # config.ssh.forward_agent = true
 
     # The url from where the 'config.vm.box' box will be fetched if it
     # doesn't already exist on the user's system.
     # config.vm.box_url = "https://vagrantcloud.com/ubuntu/trusty64/version/1/provider/virtualbox.box"
-    # Microsoft OneDrive link
-    #config.vm.box_url = "https://onedrive.live.com/download?cid=5184C6CE006B3E69&resid=5184C6CE006B3E69%21505&authkey=ANSx7SJQhwh1LcU"
 
     # Disable automatic box update checking. If you disable this, then
     # boxes will only be checked for updates when the user runs

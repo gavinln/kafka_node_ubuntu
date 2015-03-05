@@ -12,6 +12,7 @@ Exec {
 
 class {
     init: ;
+    timezone: timezone => 'US/Pacific-New';
     python_setup:;
     ohmyzsh_setup:;
     javascript:;
